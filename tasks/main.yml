@@ -1,11 +1,11 @@
 ---
 # tasks file for apigee-opdk-start-components
-- name: Stop Apigee component
+- name: Stop all Apigee components on the node
   ignore_errors: yes
   shell: '{{ apigee_all }} stop'
   when: component_name == 'all' and opdk_version | version_compare('4.16.01', '>=')
 
-- name: Stop Apigee component
+- name: Stop a specific Apigee component on the node
   ignore_errors: yes
   shell: '{{ apigee_service }} {{ component_name }} stop'
   when: component_name != 'all' and opdk_version | version_compare('4.16.01', '>=')
