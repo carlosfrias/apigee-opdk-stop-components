@@ -16,12 +16,12 @@
 - block:
   - name: Stop a specific Apigee component on the node
     ignore_errors: yes
-    shell: '{{ apigee_service }} {{ component_name }} stop'
+    shell: '/opt/apigee/apigee-service/bin/apigee-service {{ component_name }} stop'
     when: opdk_version | version_compare('4.16.01', '>=') and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
 
   - name: DEBUG_MODE - Stop a specific Apigee component on the node
     ignore_errors: yes
-    shell: '{{ apigee_service }} {{ component_name }} stop'
+    shell: '/opt/apigee/apigee-service/bin/apigee-service {{ component_name }} stop'
     when: opdk_version | version_compare('4.16.01', '>=') and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
 
   when: component_name != 'all'
