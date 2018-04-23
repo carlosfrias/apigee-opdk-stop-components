@@ -3,12 +3,24 @@
 - block:
   - name: Stop all Apigee components on the node
     ignore_errors: yes
-    shell: '{{ apigee_all }} stop'
+    shell: '/opt/apigee/apigee-service/bin/apigee-all stop'
+    environment:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy }}"
+      PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
+      UP_TIMEOUT: '{{ up_timeout | default(60) }}'
     when: opdk_version | version_compare('4.16.01', '>=') and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
 
   - name: DEBUG_MODE - Stop all Apigee components on the node
     ignore_errors: yes
-    shell: '{{ apigee_all }} stop'
+    shell: 'bash -x /opt/apigee/apigee-service/bin/apigee-all stop'
+    environment:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy }}"
+      PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
+      UP_TIMEOUT: '{{ up_timeout | default(60) }}'
     when: opdk_version | version_compare('4.16.01', '>=') and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
 
   when: component_name == 'all'
@@ -17,11 +29,23 @@
   - name: Stop a specific Apigee component on the node
     ignore_errors: yes
     shell: '/opt/apigee/apigee-service/bin/apigee-service {{ component_name }} stop'
+    environment:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy }}"
+      PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
+      UP_TIMEOUT: '{{ up_timeout | default(60) }}'
     when: opdk_version | version_compare('4.16.01', '>=') and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
 
   - name: DEBUG_MODE - Stop a specific Apigee component on the node
     ignore_errors: yes
-    shell: '/opt/apigee/apigee-service/bin/apigee-service {{ component_name }} stop'
+    shell: 'bash -x /opt/apigee/apigee-service/bin/apigee-service {{ component_name }} stop'
+    environment:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy }}"
+      PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
+      UP_TIMEOUT: '{{ up_timeout | default(60) }}'
     when: opdk_version | version_compare('4.16.01', '>=') and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
 
   when: component_name != 'all'
