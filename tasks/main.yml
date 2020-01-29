@@ -2,7 +2,6 @@
 # tasks file for apigee-opdk-start-components
 - block:
   - name: Stop all Apigee components on the node
-    ignore_errors: yes
     shell: '/opt/apigee/apigee-service/bin/apigee-all stop'
     environment:
       http_proxy: "{{ http_proxy | default('') }}"
@@ -13,7 +12,6 @@
     when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off' and opdk_version is version_compare('4.16.01', '>=')
 
   - name: DEBUG_MODE - Stop all Apigee components on the node
-    ignore_errors: yes
     shell: 'bash -x /opt/apigee/apigee-service/bin/apigee-all stop'
     environment:
       http_proxy: "{{ http_proxy | default('') }}"
@@ -27,7 +25,6 @@
 
 - block:
   - name: Stop a specific Apigee component on the node
-    ignore_errors: yes
     shell: '/opt/apigee/apigee-service/bin/apigee-service {{ component_name }} stop'
     environment:
       http_proxy: "{{ http_proxy | default('') }}"
@@ -38,7 +35,6 @@
     when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off' and opdk_version is version_compare('4.16.01', '>=')
 
   - name: DEBUG_MODE - Stop a specific Apigee component on the node
-    ignore_errors: yes
     shell: 'bash -x /opt/apigee/apigee-service/bin/apigee-service {{ component_name }} stop'
     environment:
       http_proxy: "{{ http_proxy | default('') }}"
